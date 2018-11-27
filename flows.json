@@ -1,0 +1,241 @@
+[
+    {
+        "id": "1dd25aaf65e975",
+        "label": "new package",
+        "type": "tab"
+    },
+    {
+        "id": "6071217840f39",
+        "type": "plugin",
+        "z": "1dd25aaf65e975",
+        "ptype": {
+            "6071217840f39": [
+                {
+                    "type": "personal",
+                    "subtype": "consumption",
+                    "ordinal": "secondary",
+                    "description": "current drawn over time can give a (partial) indication of energy consumption",
+                    "conditions": [
+                        {
+                            "granularity": {
+                                "threshold": 0.01,
+                                "unit": "Hz"
+                            }
+                        }
+                    ],
+                    "required": [
+                        "payload.value.current"
+                    ],
+                    "accretion": true
+                },
+                {
+                    "type": "personal",
+                    "subtype": "consumption",
+                    "ordinal": "secondary",
+                    "description": "voltage measured across your device can give a (partial) indication of energy consumption",
+                    "conditions": [
+                        {
+                            "granularity": {
+                                "threshold": 0.01,
+                                "unit": "Hz"
+                            }
+                        }
+                    ],
+                    "required": [
+                        "payload.value.voltage"
+                    ],
+                    "accretion": true
+                },
+                {
+                    "type": "personal",
+                    "subtype": "consumption",
+                    "ordinal": "secondary",
+                    "description": "power usage will give a (partial) indication of energy consumption",
+                    "conditions": [
+                        {
+                            "granularity": {
+                                "threshold": 0.01,
+                                "unit": "Hz"
+                            }
+                        }
+                    ],
+                    "required": [
+                        "payload.value.power"
+                    ],
+                    "accretion": true
+                },
+                {
+                    "type": "personal",
+                    "subtype": "employment-status",
+                    "ordinal": "secondary",
+                    "description": "power usage can be used to infer employment status",
+                    "evidence": [
+                        "https://www.sciencedirect.com/science/article/pii/S0198971516300813",
+                        "https://dl.acm.org/citation.cfm?id=2422562"
+                    ],
+                    "conditions": [
+                        {
+                            "granularity": {
+                                "threshold": 0.01,
+                                "unit": "Hz"
+                            }
+                        }
+                    ],
+                    "required": [
+                        "payload.value.power"
+                    ],
+                    "accretion": true
+                }
+            ]
+        },
+        "name": "",
+        "subtype": "TP-Power-Usage",
+        "x": 245.5,
+        "y": 351,
+        "wires": [
+            [
+                "686090f314487"
+            ]
+        ]
+    },
+    {
+        "id": "686090f314487",
+        "type": "rules",
+        "z": "1dd25aaf65e975",
+        "name": "",
+        "rules": [
+            {
+                "input": "6071217840f39",
+                "attribute": "payload.value.power",
+                "operator": "gt",
+                "operand": "40",
+                "outputMessage": {
+                    "type": "set-bulb-on",
+                    "payload": "on"
+                },
+                "ruleId": 0,
+                "outputType": "f8d2032ab2256",
+                "outputSchema": {
+                    "type": "object",
+                    "description": "the container object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "one of either 'set-bulb-on', 'set-bulb-hue', 'set-bulb-brightness'",
+                            "enum": [
+                                "set-bulb-on",
+                                "set-bulb-hue",
+                                "set-bulb-brightness"
+                            ]
+                        },
+                        "payload": {
+                            "type": "oneOf",
+                            "selector": "type",
+                            "description": "'type' dependent",
+                            "oneOf": [
+                                {
+                                    "key": "type",
+                                    "value": "set-bulb-on",
+                                    "type": "string",
+                                    "description": "\"on\" or \"off\""
+                                },
+                                {
+                                    "key": "type",
+                                    "value": "set-bulb-hue",
+                                    "type": "number",
+                                    "description": "a hue value (0-360)"
+                                },
+                                {
+                                    "key": "type",
+                                    "value": "set-bulb-brightness",
+                                    "type": "number",
+                                    "description": "a brightness value (0-255)"
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "payload"
+                    ],
+                    "id": "f8d2032ab2256"
+                }
+            },
+            {
+                "input": "6071217840f39",
+                "attribute": "payload.value.power",
+                "operator": "lt",
+                "operand": "40",
+                "outputMessage": {
+                    "type": "set-bulb-on",
+                    "payload": "off"
+                },
+                "ruleId": 1,
+                "outputType": "f8d2032ab2256",
+                "outputSchema": {
+                    "type": "object",
+                    "description": "the container object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "description": "one of either 'set-bulb-on', 'set-bulb-hue', 'set-bulb-brightness'",
+                            "enum": [
+                                "set-bulb-on",
+                                "set-bulb-hue",
+                                "set-bulb-brightness"
+                            ]
+                        },
+                        "payload": {
+                            "type": "oneOf",
+                            "selector": "type",
+                            "description": "'type' dependent",
+                            "oneOf": [
+                                {
+                                    "key": "type",
+                                    "value": "set-bulb-on",
+                                    "type": "string",
+                                    "description": "\"on\" or \"off\""
+                                },
+                                {
+                                    "key": "type",
+                                    "value": "set-bulb-hue",
+                                    "type": "number",
+                                    "description": "a hue value (0-360)"
+                                },
+                                {
+                                    "key": "type",
+                                    "value": "set-bulb-brightness",
+                                    "type": "number",
+                                    "description": "a brightness value (0-255)"
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "payload"
+                    ],
+                    "id": "f8d2032ab2256"
+                }
+            }
+        ],
+        "x": 400,
+        "y": 340,
+        "wires": [
+            [
+                "f8d2032ab2256"
+            ]
+        ]
+    },
+    {
+        "id": "f8d2032ab2256",
+        "type": "bulbsout",
+        "z": "1dd25aaf65e975",
+        "name": "",
+        "subtype": "set-bulb-on",
+        "value": "",
+        "x": 558.5,
+        "y": 344,
+        "wires": []
+    }
+]
