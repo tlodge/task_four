@@ -1,6 +1,6 @@
 {
     "manifest-version": 1,
-    "name": "tlodge-task_four",
+    "name": "task_four",
     "version": "0.3.0",
     "description": "lights up bulb when power consumed by plug is greater than 40W",
     "author": "tlodge",
@@ -10,10 +10,10 @@
         "tplink",
         " hue bulb"
     ],
-    "homepage": "https://github.com/tlodge/tlodge-task_four",
+    "homepage": "https://github.com/tlodge/task_four",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/tlodge/tlodge-task_four.git"
+        "url": "git+https://github.com/tlodge/task_four.git"
     },
     "packages": [
         {
