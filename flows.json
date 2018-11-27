@@ -108,7 +108,7 @@
                 "input": "6071217840f39",
                 "attribute": "payload.value.power",
                 "operator": "gt",
-                "operand": "40",
+                "operand": "30",
                 "outputMessage": {
                     "type": "set-bulb-on",
                     "payload": "on"
@@ -165,7 +165,7 @@
                 "input": "6071217840f39",
                 "attribute": "payload.value.power",
                 "operator": "lt",
-                "operand": "40",
+                "operand": "30",
                 "outputMessage": {
                     "type": "set-bulb-on",
                     "payload": "off"
